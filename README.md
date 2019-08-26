@@ -1,6 +1,6 @@
 # bot
 A bot that you can interact with.  
-Mainly just a learning experience to mess around with voice commands, some Google APIs etc.
+Mainly just a learning experience to mess around with voice commands, some IBM Watson APIs etc.
 
 ## Challenges
 

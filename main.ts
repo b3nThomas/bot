@@ -1,9 +1,18 @@
 import { voiceToTextCallback } from './src/VoiceToText';
-import { recorder } from './src/Recorder';
+import { voiceRecorder } from './src/VoiceRecorder';
 
-// Voice-To-Text
-const voiceToTextNode = document.getElementById('voice-to-text');
-recorder(voiceToTextNode, voiceToTextCallback);
+(() => {
+    if (!navigator.mediaDevices) {
+        return console.error('Your browser does not support this app. Try something more modern');
+    }
+
+    navigator.mediaDevices.getUserMedia({ audio: true}).then(stream => {
+
+        // Voice-To-Text
+        const voiceToTextNode = document.getElementById('voice-to-text');
+        voiceRecorder(voiceToTextNode, voiceToTextCallback, stream);
+    });
+})();
 
 // const clips = document.getElementById('clips');
 // const record = document.getElementById('record');
