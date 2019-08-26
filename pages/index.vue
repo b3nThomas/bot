@@ -6,7 +6,7 @@
         bot
       </h1>
       <h2 class="subtitle">
-        A Bot that does things!
+        A bot that does things!
       </h2>
       <div class="links">
         <a

@@ -1,6 +1,6 @@
 # bot
 
-> A Bot that does things!
+> A bot that does things!
 
 ## Build Setup
 
