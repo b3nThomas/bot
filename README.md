@@ -1,9 +1,22 @@
 # bot
-A bot that you can interact with.  
-Mainly just a learning experience to mess around with voice commands, some IBM Watson APIs etc.
 
-## Challenges
+> A Bot that does things!
 
-- Make a resusable recording device
-- Record an audio clip, convert to text, print it on screen
-- Record an audio clip, convert to text, get a bot to speak it back
+## Build Setup
+
+``` bash
+# install dependencies
+$ npm run install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+$ npm run start
+
+# generate static project
+$ npm run generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
