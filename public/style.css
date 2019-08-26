@@ -1,0 +1,67 @@
+@font-face {
+    font-family: system;
+    font-style: normal;
+    font-weight: 300;
+    src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+  
+body {
+    font-family: "system";
+    color: rgb(255, 255, 255);
+    background-color: #333;
+}
+
+h1, h2 {
+    margin: 8px 0 16px;
+    text-align: center;
+}
+
+.panel {
+    background-color: #444;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.record-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    width: 64px;
+    margin: 0 auto;
+    border-radius: 100%;
+    background-color: rgb(110, 110, 110);
+    border: 1px solid rgb(190, 190, 190);
+    transition: background-color .25s ease, border-color .2s ease, stroke .2s ease, fill .2s ease;
+    cursor: pointer;
+    outline: none;
+    fill: rgb(255, 255, 255);
+    stroke: rgb(255, 255, 255);
+}
+
+.record-btn:active, .record-btn:focus, .record-btn:hover {
+    background-color: rgb(69, 153, 66);
+    border: 1px solid rgb(87, 199, 83);
+}
+
+@keyframes recording {
+    0% {
+        background-color: rgb(230, 90, 90);
+    }
+
+    50% {
+        background-color: rgb(230, 50, 50)
+    }
+
+    100% {
+        background-color: rgb(230, 90, 90);
+    }
+}
+
+.record-btn.recording {
+    animation-name: recording;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    border: 1px solid rgb(230, 50, 50);
+}
