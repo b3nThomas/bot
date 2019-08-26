@@ -1,1 +1,4 @@
-// KEEP
+import { mic } from './src/Mic';
+
+mic();
+
