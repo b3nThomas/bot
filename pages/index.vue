@@ -1,15 +1,17 @@
 <template>
     <div class="container">
         <div>
-            <h1 class="title">bot</h1>
-            <h2 class="subtitle">A bot that does things!</h2>
+            <audio-capture />
         </div>
     </div>
 </template>
 
 <script>
+import AudioCapture from '~/components/AudioCapture';
 export default {
-    components: {}
+    components: {
+        AudioCapture
+    }
 };
 </script>
 
@@ -31,13 +33,5 @@ export default {
     font-size: 100px;
     color: #35495e;
     letter-spacing: 1px;
-}
-
-.subtitle {
-    font-weight: 300;
-    font-size: 42px;
-    color: #526488;
-    word-spacing: 5px;
-    padding-bottom: 15px;
 }
 </style>
