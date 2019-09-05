@@ -1,16 +1,16 @@
 <template>
     <div class="container">
         <div>
-            <audio-capture />
+            <audio-recorder />
         </div>
     </div>
 </template>
 
 <script>
-import AudioCapture from '~/components/AudioCapture';
+import AudioRecorder from '~/components/AudioRecorder';
 export default {
     components: {
-        AudioCapture
+        AudioRecorder
     }
 };
 </script>

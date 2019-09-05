@@ -3,7 +3,7 @@
         <button
             class="record"
             ref="record"
-            @click="record">
+            @click="toggleRecord">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -21,36 +21,79 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
             audioAccessGranted: false,
+            audioContext: null,
+            audioAnalyser: null,
+            audioProcessor: null,
+            micInput: null,
+            microphone: null,
             stream: null
         }
     },
+    mounted() {
+        this.checkForMicrophonePermissions();
+    },
     methods: {
-        requestMicrophoneAccess() {
-            console.log('Requesting microphone access...');
-            
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                console.log('Microphone access granted');
-                this.stream = stream
-                this.audioAccessGranted = true;
+        checkForMicrophonePermissions() {
+            navigator.permissions.query({ name: 'microphone' })
+                .then(result => {
+                    if (result.state === 'granted') {
+                        this.$refs['record'].classList.add('permitted');
+                        this.audioAccessGranted = true;
+                    }
+                })
+            ;
+        },
+        createAudioContext(stream) {
+            console.log('CREATE AUDIO');
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.audioContext = new AudioContext({ sampleRate: 44100 });
+            if (!this.audioContext) {
+                return console.error('AudioContext not supported. AudioRecorder component unavailable');
+            }
+            this.micInput = this.audioContext.createGain();
+            this.microphone = this.audioContext.createMediaStreamSource(stream);
+            this.audioAnalyser = this.audioContext.createAnalyser();
+            this.audioProcessor = this.micInput.context.createScriptProcessor(2048, 2, 2);
+            this.microphone.connect(this.micInput);
+            this.micInput.connect(this.audioAnalyser);
+            this.micInput.connect(this.audioProcessor);
+            this.audioProcessor.connect(this.micInput.context.destination);
+            this.audioProcessor.addEventListener('audioprocess', e => {
+                const floatSamples = e.inputBuffer.getChannelData(0);
+                console.log('HELLO?');
             });
         },
-        record() {
-            if (!this.audioAccess) {
-                this.requestMicrophoneAccess();
-            }
-            const recording = this.$refs['record'].classList.contains('recording');
-            if (!recording) {
-                console.log('Recording started');
-                this.$refs['record'].classList.add('recording');
+        accessAudioStream() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    this.$refs['record'].classList.add('permitted');
+                    this.audioAccessGranted = true;
+                    this.createAudioContext(stream);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+            ;
+        },
+        toggleRecord() {
+            this.accessAudioStream();
+            if (!this.$refs['record'].classList.contains('recording')) {
+                this.startRecording();
             } else {
-                console.log('Recording stopped');
-                this.$refs['record'].classList.remove('recording');
+                this.stopRecording();
             }
+        },
+        startRecording() {
+            console.log('Recording started');
+            this.$refs['record'].classList.add('recording');
+        },
+        stopRecording() {
+            console.log('Recording stopped');
+            this.$refs['record'].classList.remove('recording');
         }
     }
 };
@@ -74,7 +117,7 @@ export default {
     stroke: rgb(255, 255, 255);
 }
 
-.record:active, .record:focus, .record:hover {
+.record.permitted {
     background-color: rgb(69, 153, 66);
     border: 1px solid rgb(87, 199, 83);
 }
